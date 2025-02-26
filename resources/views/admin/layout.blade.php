@@ -18,7 +18,7 @@
 <body class="antialiased">
 <nav class="navbar bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('admin.index') }}">Modul 2 SBD - Kelompok XX</a>
+        <a class="navbar-brand" href="{{ route('admin.index') }}">Modul 1 SBD - Kelompok 11</a>
     </div>
 </nav>
 <div class="container"> @yield('content')

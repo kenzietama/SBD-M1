@@ -67,9 +67,31 @@ class AdminController extends Controller
 
     public function delete($id)
     {
+        DB::insert('INSERT INTO trash SELECT * FROM admin WHERE id_admin = :id_admin', ['id_admin' => $id]);
         DB::delete('DELETE FROM admin WHERE id_admin = :id_admin', ['id_admin' => $id]);
         return redirect()->route('admin.index')->with('success', 'Data Admin berhasil dihapus');
     }
 
+    public function trash()
+    {
+        $datas = DB::select('select * from trash'); return view('admin.trash')->with('datas', $datas);
+    }
+
+    public function deletePermanent($id) {
+        DB::delete('DELETE FROM trash WHERE id_admin = :id_admin', ['id_admin' => $id]);
+        return redirect()->route('admin.trash')->with('success', 'Data Admin berhasil dihapus permanen');
+    }
+
+    public function undoAll() {
+        DB::insert('INSERT INTO admin SELECT * FROM trash');
+        DB::delete('DELETE FROM trash');
+        return redirect()->route('admin.trash')->with('success', 'Data Admin berhasil dikembalikan');
+    }
+
+    public function undo($id) {
+        DB::insert('INSERT INTO admin SELECT * FROM trash WHERE id_admin = :id_admin', ['id_admin' => $id]);
+        DB::delete('DELETE FROM trash WHERE id_admin = :id_admin', ['id_admin' => $id]);
+        return redirect()->route('admin.trash')->with('success', 'Data Admin berhasil dikembalikan');
+    }
 
 }
